@@ -263,12 +263,15 @@ class FUNIT(object) :
         os.makedirs(os.path.join(self.result_dir, self.name, 'CT'), exist_ok=True)
 
         with torch.no_grad():
-            for tar, tar_label in test_iter:
+            for data in self.test_loader:
+                tar = data[0]
+                tar_label = data[1]
+                f_name = data[2]
                 try:
-                    train, train_label, f_name = next(train_iter)
+                    train, train_label = next(train_iter)
                 except:
                     train_iter = iter(self.train_loader)
-                    train, train_label, f_name = next(train_iter)
+                    train, train_label = next(train_iter)
                 
                 while tar_label == train_label:
                     try:

@@ -39,7 +39,7 @@ class CustomDataset(DatasetFolder):
 
         else:
             samples_array = np.array(self.samples)
-            target_list = samples_array[samples_array[:, 1].astype(np.int) == target]
+            target_list = samples_array[samples_array[:, 1].astype(np.int32) == target]
             idx = np.random.choice(target_list.shape[0], self.target_num - 1)
             path2, target2 = target_list[idx, 0], target_list[idx, 1]
             target = torch.LongTensor([target])

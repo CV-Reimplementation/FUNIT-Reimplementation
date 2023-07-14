@@ -1,3 +1,4 @@
+from genericpath import exists
 from FUNIT import FUNIT
 import argparse
 from utils import *
@@ -8,7 +9,7 @@ def parse_args():
     desc = "Pytorch implementation of TSGAN"
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('--phase', type=str, default='train', help='[train / test]')
-    parser.add_argument('--name', type=str, default='FUNIT', help='project_name')
+    parser.add_argument('--name', type=str, default='MRI-CT', help='project_name')
     parser.add_argument('--dataset', type=str, default='../dataset/MRI-CT', help='dataset_name')
 
     parser.add_argument('--iteration', type=int, default=100000, help='The number of training iterations')
