@@ -227,39 +227,6 @@ class FUNIT(object) :
                 params['Dis'] = self.Dis.state_dict()
                 torch.save(params, os.path.join(self.result_dir, self.name + '_params_latest.pt'))
 
-            if step % self.print_freq == 0:
-                with torch.no_grad():
-                    n_sample = 3
-                    assert (n_sample <= self.batch_size)
-                    output = np.zeros((self.img_size * (self.K + 2), 0, 3))
-                    try:
-                        target, _ = next(test_iter)
-                    except:
-                        test_iter = iter(self.test_loader)
-                        target, _ = next(test_iter)
-
-                    real = target.to(self.device)
-                    real_A = real_A[0].expand((self.batch_size, 3, self.img_size, self.img_size))
-
-                    con_A = self.ConEn_(real_A)
-                    cls_code = torch.zeros(0, self.batch_size, self.code_dim).to(self.device)
-                    for i in range(real.shape[1] // 3):
-                        cls = self.ClsEn_(real[:, 3 * i:3 * (i + 1)])
-                        cls_code = torch.cat((cls_code, cls.unsqueeze(0)), 0)
-
-                    cls_code = torch.mean(cls_code, 0)
-                    result = self.Dec_(con_A, cls_code)
-
-                    for n in range(n_sample):
-                        temp = np.zeros((0, self.img_size, 3))
-                        for i in range(real.shape[1] // 3):
-                            real_B = real[n, 3 * i:3 * (i + 1)]
-                            temp = np.concatenate((temp, RGB2BGR(tensor2numpy(denorm(real_B)))), 0)
-                        temp = np.concatenate((temp, RGB2BGR(tensor2numpy(denorm(real_A[n]))), RGB2BGR(tensor2numpy(denorm(result[n])))), 0)
-                        output = np.concatenate((output, temp), 1)
-
-                    cv2.imwrite(os.path.join(self.result_dir, self.name, 'img', self.name + '_test_result_%07d.png' % (step)), output * 255.0)
-
     def save(self, dir, step):
         params = {}
         params['ConEn'] = self.ConEn.state_dict()
