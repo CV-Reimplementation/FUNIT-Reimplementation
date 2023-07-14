@@ -1,6 +1,7 @@
 from FUNIT import FUNIT
 import argparse
 from utils import *
+import os
 
 """parsing and configuration"""
 def parse_args():
@@ -51,10 +52,10 @@ def parse_args():
 """checking arguments"""
 def check_args(args):
     # --result_dir
-    check_folder(os.path.join(args.result_dir, args.name, 'model'))
-    check_folder(os.path.join(args.result_dir, args.name, 'img'))
-    check_folder(os.path.join(args.result_dir, args.name, 'log'))
-    check_folder(os.path.join(args.result_dir, args.name, 'test'))
+    os.makedirs(os.path.join(args.result_dir, args.name, 'model'), exist_ok=True)
+    os.makedirs(os.path.join(args.result_dir, args.name, 'img'), exist_ok=True)
+    os.makedirs(os.path.join(args.result_dir, args.name, 'log'), exist_ok=True)
+    os.makedirs(os.path.join(args.result_dir, args.name, 'test'), exist_ok=True)
 
     # --batch_size
     try:

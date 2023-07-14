@@ -1,5 +1,4 @@
-# FUNIT-pytorch
-## : Few-Shot Unsupervised Image-to-Image Translation (ICCV 2019)
+# FUNIT-pytorch: Few-Shot Unsupervised Image-to-Image Translation (ICCV 2019)
 
 Edited from [FUNIT-pytorch](https://github.com/znxlwm/FUNIT-pytorch)
 

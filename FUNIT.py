@@ -128,10 +128,10 @@ class FUNIT(object) :
         start_time = time.time()
         for step in range(start_iter, self.iteration + 1):
             try:
-                real, label, _ = next(train_iter)
+                real, label = next(train_iter)
             except:
                 train_iter = iter(self.train_loader)
-                real, label, _ = next(train_iter)
+                real, label = next(train_iter)
 
             onehot_A = torch.zeros(self.batch_size, self.n_class).scatter_(1, label[self.batch_size:].view(-1, 1), 1)
             onehot_B = torch.zeros(self.batch_size, self.n_class).scatter_(1, label[:self.batch_size].view(-1, 1), 1)
@@ -305,10 +305,10 @@ class FUNIT(object) :
                 
                 while tar_label == train_label:
                     try:
-                        train, train_label, _ = next(train_iter)
+                        train, train_label = next(train_iter)
                     except:
                         train_iter = iter(self.train_loader)
-                        train, train_label, _ = next(train_iter)
+                        train, train_label = next(train_iter)
 
                 train, tar = train.to(self.device), tar.to(self.device)
                 
